@@ -1,0 +1,7 @@
+- say how each section is structured
+	- short lecture on slides
+	- live coding videos where I apply the material in R and you can either watch me doing that or execute code side by side
+	- exercises were you can work on some tasks
+
+
+	

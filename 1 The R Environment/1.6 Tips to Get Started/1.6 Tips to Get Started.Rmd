@@ -1,0 +1,80 @@
+---
+title: "Introduction to R"
+author: "Lion Behrens, M.Sc."
+institute: "Chair of Social Data Science and Methodology"
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: methods-theme.css
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: middle, inverse
+
+# Introduction to R
+## 1.6 Tips To Get Started
+
+#### Lion Behrens, M.Sc.
+
+&nbsp;  
+&nbsp;  
+&nbsp;    
+&nbsp;    
+&nbsp;  
+&nbsp;    
+
+```{r, echo=FALSE, out.width="50%"}
+knitr::include_graphics("Logo_UMA_EN_Weiss.PNG")
+```
+____________________________________________________________   
+University of Mannheim      
+Chair of Social Data Science and Methodology      
+Chair of Quantitative Methods in the Social Sciences     
+
+---
+
+class: middle, inverse
+
+# Tip 1: Write short and concise object names
+
+---
+
+
+class: middle, inverse
+
+# Tip 2: Write a maximum of 80 characters of code per line
+
+---
+
+class: middle, inverse
+
+# Tip 3: Name sections in your R script
+
+---
+
+class: middle, inverse
+
+# Tip 4: Indent your code by the arguments of a function
+
+---
+
+class: middle, inverse
+
+# Tip 5: Use set.seed() for reproducability
+
+---
+
+
+class: middle, inverse
+
+# Tip 6: The best way to learn R is doing R
+
+---
+
+class: middle, inverse
+
+# Tip 7: Get help online

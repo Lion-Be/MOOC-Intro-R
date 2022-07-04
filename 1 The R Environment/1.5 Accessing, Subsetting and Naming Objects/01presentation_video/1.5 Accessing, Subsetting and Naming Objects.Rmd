@@ -1,0 +1,402 @@
+---
+title: "Introduction to R"
+author: "Lion Behrens, M.Sc."
+institute: "Chair of Social Data Science and Methodology"
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: methods-theme.css
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: middle, inverse
+
+# Introduction to R
+## 1.5 Accessing, Subsetting and Naming Objects
+
+#### Lion Behrens, M.Sc.
+
+&nbsp;  
+&nbsp;  
+&nbsp;    
+&nbsp;    
+&nbsp;  
+&nbsp;    
+
+```{r, echo=FALSE, out.width="50%"}
+knitr::include_graphics("Logo_UMA_EN_Weiss.PNG")
+```
+____________________________________________________________   
+University of Mannheim      
+Chair of Social Data Science and Methodology      
+Chair of Quantitative Methods in the Social Sciences     
+
+---
+
+# Accessing and Subsetting Objects
+
+- Often, we only want to access only a **subset of the information** that is stored in an object.
+
+--
+
+- This holds equally if we are working with vectors, matrices, data frames or lists. 
+
+--
+
+- **Accessing** and **subsetting** objects works **very similar** across different object types. 
+
+&nbsp;  
+&nbsp;  
+
+```{r, eval=T, echo=F}
+numeric_vector <- c(1, 2, 3, 4, 5)
+character_vector <- c("Austria", "England", "Brazil", "Germany")
+logical_vector <- c(TRUE, FALSE, FALSE, TRUE)
+matrix_example <- matrix(1:20, nrow = 4, ncol = 5)
+df_example <-
+  data.frame(
+    country = c("Austria", "England", "Brazil", "Germany"), 
+    capital = c("Vienna", "London", "Brasília", "Berlin"), 
+    elo = c(1761, 1938, 2166, 1988)
+  )
+list_example <- 
+  list(numeric_vector, 
+       character_vector, 
+       logical_vector, 
+       matrix_example, 
+       df_example)
+```
+
+--
+
+```{r, eval=T}
+character_vector <- c("Austria", "England", "Brazil", "Germany")
+```
+
+--
+
+```{r, eval=T}
+character_vector[1] # accessing the first element
+```
+
+---
+
+# Accessing and Subsetting Vectors
+
+- Often, we only want to access only a **subset of the information** that is stored in an object.
+
+- This holds equally if we are working with vectors, matrices, data frames or lists. 
+
+- **Accessing** and **subsetting** objects works **very similar** across different object types. 
+
+&nbsp;  
+&nbsp;  
+
+```{r, eval=T}
+character_vector <- c("Austria", "England", "Brazil", "Germany")
+```
+
+
+```{r, eval=T}
+character_vector[length(character_vector)] # accessing the last element
+```
+
+---
+
+# Accessing and Subsetting Matrices
+
+- Since matrices have **two dimensions**, we need to specify the **row** and **column** of the element that we want to retreive.
+
+--
+
+&nbsp;  
+
+The **general logic** goes
+
+```{r, eval=F, echo=T}
+matrix_object[specific_row, specific_column]
+```
+
+--
+
+*Note:* These operations equally hold for **data frames**. 
+
+---
+
+# Accessing and Subsetting Matrices
+
+- Since matrices have **two dimensions**, we need to specify the **row** and **column** of the element that we want to retreive.
+
+
+&nbsp;  
+
+```{r, eval=T, echo=T}
+matrix_example <- matrix(1:20, nrow = 4, ncol = 5)
+print(matrix_example)
+```
+
+--
+
+```{r, eval=F, echo=T}
+matrix_example[1,1] # 1st row, 1st column
+matrix_example[2,] # 2nd row
+matix_example[,4] # 4th column
+matrix_example[1:2, 3:4] # rows 1 and 2, columns 3 and 4
+```
+
+---
+
+# Accessing and Subsetting Data Frames
+
+- When working with **data frames**, you can select individual elements, rows and columns in the same way as with **matrices**. 
+
+--
+
+- Additionally, you can take advantage of the the fact that columns (**variables**) actually have **names**. 
+
+--
+
+```{r, eval=T, echo=T}
+df_example <-
+  data.frame(
+    country = c("Austria", "England", "Brazil", "Germany"), 
+    capital = c("Vienna", "London", "Brasília", "Berlin"), 
+    elo = c(1761, 1938, 2166, 1988)
+  )
+```
+
+--
+
+- You can access individual variables using the **$** sign: 
+
+--
+
+```{r, eval=T, echo=T}
+df_example$country
+```
+
+---
+
+# Accessing and Subsetting Data Frames
+
+- When working with **data frames**, you can select individual elements, rows and columns in the same way as with **matrices**. 
+
+- Additionally, you can take advantage of the the fact that columns (**variables**) actually have **names**. 
+
+```{r, eval=T, echo=T}
+df_example <-
+  data.frame(
+    country = c("Austria", "England", "Brazil", "Germany"), 
+    capital = c("Vienna", "London", "Brasília", "Berlin"), 
+    elo = c(1761, 1938, 2166, 1988)
+  )
+```
+
+
+- An alternative is **indexing** by **variable name**. 
+
+```{r, eval=T, echo=T}
+df_example["country"]
+```
+
+---
+
+# Accessing and Subsetting Data Frames
+
+- When working with **data frames**, you can select individual elements, rows and columns in the same way as with **matrices**. 
+
+- Additionally, you can take advantage of the the fact that columns (**variables**) actually have **names**. 
+
+```{r, eval=T, echo=T}
+df_example <-
+  data.frame(
+    country = c("Austria", "England", "Brazil", "Germany"), 
+    capital = c("Vienna", "London", "Brasília", "Berlin"), 
+    elo = c(1761, 1938, 2166, 1988)
+  )
+```
+
+
+- Or using the **order of the variables**: 
+
+```{r, eval=T, echo=T}
+df_example[1]
+```
+
+---
+
+# Accessing and Subsetting Lists
+
+```{r, eval=T, echo=T}
+list_example
+```
+
+---
+
+# Accessing and Subsetting Lists
+
+Next to indexing with `[ ]` there exists a different way of **indexing** in R using `[[ ]]`.
+
+--
+
+- `[ ]` always returns object of the **same class** 
+
+--
+
+- `[[ ]]` can return objects of **different classes**
+
+--
+
+&nbsp;  
+
+This distinction comes in very handy when working with lists. 
+
+
+```{r, eval=T, echo=T}
+list_example[2] # returns a sublist of list_example, which is a list itself
+```
+
+--
+
+```{r, eval=T, echo=T}
+x <- list_example[2] 
+class(x) # check whether it's a list
+```
+
+---
+
+# Accessing and Subsetting Lists
+
+Next to **indexing** with `[ ]` there exists a different **subsetting operator** in R using `[[ ]]`.
+
+- `[ ]` always returns object of the **same class** 
+
+- `[[ ]]` can return objects of **different classes**
+
+&nbsp;  
+
+This distinction comes in very handy when working with lists. 
+
+
+```{r, eval=T, echo=T}
+list_example[[2]] # returns the object that is stored in the second sublist
+```
+
+--
+
+```{r, eval=T, echo=T}
+x <- list_example[[2]] 
+class(x) # check whether it's a vector
+is.vector(x)
+```
+
+---
+
+# Combining [[ ]] and [ ]
+
+We can even combine both **subsetting operators** when working with lists. Type `list_example[[2]][1]`.
+
+--
+
+- `[[2]]` refers to the vector stored in the second sublist in `list_example`
+
+--
+
+- `[1]` refers to the first element of this vector
+
+--
+
+&nbsp;  
+
+**Question:** Which object will be retained by the above command?
+
+```{r, eval=T, echo=F}
+list_example[1:2]
+```
+
+--
+
+```{r, eval=T, echo=T}
+list_example[[2]][1]
+```
+
+---
+
+
+# Naming Objects
+
+We can name the **individual elements** of different elements using the `names()` function. 
+
+--
+
+First, let's check whether the vectors that we generated have any names assigned to them. 
+
+--
+
+&nbsp;
+
+```{r, eval=T, echo=T}
+numeric_vector <- c(1, 2, 3, 4, 5)
+names(numeric_vector)
+```
+
+--
+
+Now, let's assign names. 
+
+--
+
+```{r, eval=T, echo=T}
+names(numeric_vector) <- c("Name A", "Name B", "Name C", "Name D", "Name E")
+numeric_vector
+```
+
+---
+
+# Naming Objects
+
+We can name the **individual elements** of different elements using the `names()` function. 
+
+First, let's check whether the vectors that we generated have any names assigned to them. 
+
+&nbsp;
+
+The same holds for **lists**. 
+
+--
+
+```{r, eval=T, echo=T}
+names(list_example) <- c("numeric_vector", "character_vector", "logical_vector", "matrix", "df")
+names(list_example)
+```
+
+
+---
+
+# Naming Objects
+
+We can name the **individual elements** of different elements using the `names()` function. 
+
+First, let's check whether the vectors that we generated have any names assigned to them. 
+
+&nbsp;
+
+As well as **matrices** and **data frames**. 
+
+--
+
+```{r, eval=T, echo=T}
+names(matrix_example) <- c("Col 1", "Col 2", "Col 3", "Col 4", "Col 5")
+names(df_example) <- c("Var 1", "Var 2", "Var 3")
+```
+
+--
+
+*Note:* For matrices and data frames, there are also the handy commands `colnames()` and `rownames()`. 
+
+
+

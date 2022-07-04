@@ -1,0 +1,4 @@
+- first of all mention that I re-arranged the panels and show where they can do it
+- say that this is really for people that literally open up RStudio for the first time when they start this course
+- then write code in the console
+- afterwards open up a script

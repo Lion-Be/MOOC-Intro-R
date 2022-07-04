@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Lion Behrens, M.Sc." />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link rel="stylesheet" href="methods-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class: middle, inverse
+
+# Introduction to R
+## 1.4 Object Classes
+
+#### Lion Behrens, M.Sc.
+
+&amp;nbsp;  
+&amp;nbsp;  
+&amp;nbsp;    
+&amp;nbsp;    
+&amp;nbsp;  
+&amp;nbsp;    
+
+&lt;img src="Logo_UMA_EN_Weiss.PNG" width="50%" /&gt;
+____________________________________________________________   
+University of Mannheim      
+Chair of Social Data Science and Methodology      
+Chair of Quantitative Methods in the Social Sciences     
+
+---
+
+# Basic R Functionality: Philosophy of R
+
+&amp;nbsp;  
+&amp;nbsp;  
+&amp;nbsp; 
+
+*"To understand computations in R, two slogans are helpful:*
+
+- *Everything that exists is an object.*
+- *Everything that happens is a function call."*
+
+---John Chambers, developer of R.
+
+---
+
+# R Objects - Central Distinction 
+
+The central workhorse in R are **objects** which, in their most general sense, simply **store information**. 
+--
+
+.pull-left[
+
+## Data types
+### (how your data is stored)
+
+- Numeric values (integers &amp; doubles)
+
+- Character strings
+
+- Boolean values
+
+- Factors
+
+- ...
+
+]
+
+--
+
+.pull-right[
+
+## Data formats
+### (where your data is stored)
+
+- Vectors
+
+- Matrices
+
+- Data frames/Tibbles
+
+- Lists
+
+- Arrays
+
+- ...
+
+]
+
+---
+
+# Numeric Values
+
+There are two types of **numerical values** in R. 
+
+--
+
+**Integers** are numbers without a decimal value. To explicitly denote that an object is an integer, you need to place an `L` behind the actual number. 
+
+
+```r
+x1 &lt;- 5L
+typeof(x1)
+```
+
+```
+## [1] "integer"
+```
+
+--
+
+**Doubles** are numbers with (a) decimal value(s). 
+
+
+```r
+x2 &lt;- 5.25
+typeof(x2)
+```
+
+```
+## [1] "double"
+```
+
+--
+
+Both `x1` and `x2` are **numeric** objects.
+
+
+```r
+is.numeric(x1)
+```
+
+```
+## [1] TRUE
+```
+
+---
+
+# Numeric Values
+
+There are two types of **numerical values** in R. 
+
+**Integers** are numbers without a decimal value. To explicitly denote that an object is an integer, you need to place an `L` behind the actual number. 
+
+
+```r
+x1 &lt;- 5L
+typeof(x1)
+```
+
+```
+## [1] "integer"
+```
+
+**Doubles** are numbers with (a) decimal value(s). 
+
+
+```r
+x2 &lt;- 5.25
+typeof(x2)
+```
+
+```
+## [1] "double"
+```
+
+Both `x1` and `x2` are **numeric** objects.
+
+
+```r
+is.numeric(x2)
+```
+
+```
+## [1] TRUE
+```
+
+
+---
+
+# Character Strings
+
+A **string** in R simply denotes a series of characters. Importantly, numbers (or any kind of symbol) can also be part of a string. To denote a character string in R, it is simply **wrapped in quotation marks**. 
+
+
+```r
+string1 &lt;- "University of Mannheim" # example of a string
+class(string1)
+```
+
+```
+## [1] "character"
+```
+
+--
+
+
+```r
+string2 &lt;- "5" # still a string, not an integer as we use quotation marks
+class(string2)
+```
+
+```
+## [1] "character"
+```
+
+--
+
+
+```r
+string3 &lt;- "TRUE" # still a string
+class(string3)
+```
+
+```
+## [1] "character"
+```
+
+---
+
+# Factors
+
+Factors are data types that consist of a **pre-defined set** of distinct **categories**, which are called **levels** in R.  
+
+--
+
+- other than numeric objects, factors do not assume their values are continuous (e.g. **ordinal**, **nominal**)
+
+--
+
+- other than character strings, each value of a factor has to correspond to one of the pre-defined levels, while character strings can hold virtually any information 
+
+--
+
+This is an example of a **valid factor operation**: 
+
+```r
+parties &lt;- factor(levels=c("SPD", "CDU", "Greens", "FDP", "AfD", "Left")) # create an empty factor 
+parties[1:3] &lt;- c("SPD", "Greens", "FDP") # fill with three values
+print(parties)
+```
+
+```
+## [1] SPD    Greens FDP   
+## Levels: SPD CDU Greens FDP AfD Left
+```
+
+--
+
+This is an example of an **invalid factor operation**: 
+
+```r
+parties[4] &lt;- "CSU" # add invalid value
+```
+
+```
+## Warning in `[&lt;-.factor`(`*tmp*`, 4, value = "CSU"): ungültiges Faktorniveau, NA
+## erzeugt
+```
+
+---
+
+# Boolean Values
+
+Boolean (or **logical**) values are either *TRUE* or *FALSE* values. You can produce these values by making **logical requests on your data**. 
+
+--
+
+
+```r
+(7 - 3) &gt; 1
+```
+
+```
+## [1] TRUE
+```
+
+--
+
+Of course, logical values can be stored in objects as well. 
+
+
+```r
+bool &lt;- 2 &gt; 1 
+print(bool)
+```
+
+```
+## [1] TRUE
+```
+
+---
+
+# Operators in R 
+
+There are quite a few operators that you can use. 
+
+.pull-left[
+
+#### Arithmetic Operators
+
+- **+** Addition 
+- **-** Subtraction 
+- **\*** Multiplication 
+- **/** Division 
+- **^** Exponentiation 
+- **%%** Modulus (remainder from division)
+
+]
+
+.pull-right[
+
+#### Relational Operators
+
+- **&lt;** Less than 
+- **&gt;** Greater than 
+- **&lt;=** Less than or equal to 
+- **&gt;=** Greater than or equal to 
+- **==** Equal to
+- **!=** Not equal to
+
+&amp;nbsp;  
+&amp;nbsp; 
+
+#### Logical Operators
+
+- **&amp;** And
+- **|** Or
+
+]
+
+---
+
+# Data Formats
+
+Individual objects can be stored in different **data types**, or **containers**. 
+
+&lt;img src="fig/data_types.png" width="80%" /&gt;
+
+*Source:* [https://devopedia.org/r-data-structures](https://devopedia.org/r-data-structures).
+
+---
+
+# Data Format: Vector
+
+&lt;img src="fig/data_vector.png" width="25%" /&gt;
+
+Vectors are built by **combining** (or **"concatenating"**) individual objects with `c()`. 
+
+--
+
+
+```r
+numeric_vector &lt;- c(1, 2, 3, 4, 5)
+print(numeric_vector)
+```
+
+```
+## [1] 1 2 3 4 5
+```
+
+--
+
+
+```r
+character_vector &lt;- c("Austria", "England", "Brazil", "Germany")
+print(character_vector)
+```
+
+```
+## [1] "Austria" "England" "Brazil"  "Germany"
+```
+
+--
+
+
+```r
+logical_vector &lt;- c(TRUE, FALSE, FALSE, TRUE)
+print(logical_vector)
+```
+
+```
+## [1]  TRUE FALSE FALSE  TRUE
+```
+
+---
+
+# Data Format: Matrix
+
+&lt;img src="fig/data_matrix.png" width="15%" /&gt;
+
+- Matrices are the most genuine **rectangular** data format in **R**.
+
+--
+
+- A matrix consists of **n** rows and **k** columns and hence has the dimensionality **n x k **. 
+
+--
+
+
+```r
+matrix_example &lt;- matrix(1:20, nrow = 4, ncol = 5) # create numeric matrix
+print(matrix_example)
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    5    9   13   17
+## [2,]    2    6   10   14   18
+## [3,]    3    7   11   15   19
+## [4,]    4    8   12   16   20
+```
+
+---
+
+# Data Format: Matrix
+
+&lt;img src="fig/data_matrix.png" width="15%" /&gt;
+
+- Matrices are the most genuine **rectangular** data format in **R**.
+
+- A matrix consists of **n** rows and **k** columns and hence has the dimensionality **n x k **. 
+
+Let's check the **dimensionality** of this matrix. 
+
+
+```r
+dim(matrix_example)
+```
+
+```
+## [1] 4 5
+```
+
+--
+
+- *Note:* You cannot store multiple data types (e.g. **character strings** and **numeric values** in the same matrix or vector.)
+
+--
+
+- If you attempt this, all of your entries will be **converted to character values**. 
+
+---
+
+# Data Format: Data Frame
+
+&lt;img src="fig/data_frame.png" width="16%" /&gt;
+
+- Data frames are R's equivalent of **data sets** as you know them from Stata, SPSS or other programs
+
+--
+
+- Data frames also are rectangular of dimensionality **n rows** x **k columns**
+
+--
+
+- *Note:* Data frames store **variables of different classes**. 
+
+--
+
+
+```r
+df_example &lt;-
+  data.frame(
+    country = c("Austria", "England", "Brazil", "Germany"), 
+    capital = c("Vienna", "London", "Brasília", "Berlin"), 
+    elo = c(1761, 1938, 2166, 1988)
+  )
+```
+
+---
+
+# Data Format: Data Frame
+
+&lt;img src="fig/data_frame.png" width="16%" /&gt;
+
+- Data frames are R's equivalent of **data sets** as you know them from Stata, SPSS or other programs
+
+- Data frames also are rectangular of dimensionality **n rows** x **k columns**
+
+- *Note:* Data frames store **variables of different classes**. 
+
+
+```r
+print(df_example)
+```
+
+```
+##   country  capital  elo
+## 1 Austria   Vienna 1761
+## 2 England   London 1938
+## 3  Brazil Brasília 2166
+## 4 Germany   Berlin 1988
+```
+
+---
+
+# Data Format: Data Frame
+
+&lt;img src="fig/data_frame.png" width="16%" /&gt;
+
+- Data frames are R's equivalent of **data sets** as you know them from Stata, SPSS or other programs
+
+- Data frames also are rectangular of dimensionality **n rows** x **k columns**
+
+- *Note:* Data frames store **variables of different classes**. 
+
+
+```r
+dim(df_example) # dimensions of the data frame
+```
+
+```
+## [1] 4 3
+```
+
+---
+
+# Data Format: Data Frame
+
+&lt;img src="fig/data_frame.png" width="16%" /&gt;
+
+- Data frames are R's equivalent of **data sets** as you know them from Stata, SPSS or other programs
+
+- Data frames also are rectangular of dimensionality **n rows** x **k columns**
+
+- *Note:* Data frames store **variables of different classes**. 
+
+
+```r
+nrow(df_example) # number of observations
+```
+
+```
+## [1] 4
+```
+
+---
+
+# Data Format: Data Frame
+
+&lt;img src="fig/data_frame.png" width="16%" /&gt;
+
+- Data frames are R's equivalent of **data sets** as you know them from Stata, SPSS or other programs
+
+- Data frames also are rectangular of dimensionality **n rows** x **k columns**
+
+- *Note:* Data frames store **variables of different classes**. 
+
+
+```r
+ncol(df_example) # number of variables
+```
+
+```
+## [1] 3
+```
+
+---
+
+# Data Format: List
+
+Essentially, lists just **bind** any number of objects **together**, even if these are of **different classes**.
+
+--
+
+
+```r
+list_example &lt;- 
+  list(numeric_vector, 
+       character_vector, 
+       logical_vector, 
+       matrix_example, 
+       df_example)
+```
+
+---
+
+# Data Format: List
+
+
+```r
+print(list_example)
+```
+
+```
+## [[1]]
+## [1] 1 2 3 4 5
+## 
+## [[2]]
+## [1] "Austria" "England" "Brazil"  "Germany"
+## 
+## [[3]]
+## [1]  TRUE FALSE FALSE  TRUE
+## 
+## [[4]]
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    5    9   13   17
+## [2,]    2    6   10   14   18
+## [3,]    3    7   11   15   19
+## [4,]    4    8   12   16   20
+## 
+## [[5]]
+##   country  capital  elo
+## 1 Austria   Vienna 1761
+## 2 England   London 1938
+## 3  Brazil Brasília 2166
+## 4 Germany   Berlin 1988
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

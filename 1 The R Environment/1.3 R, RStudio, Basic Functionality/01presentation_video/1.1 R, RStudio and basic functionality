@@ -1,0 +1,73 @@
+---
+title: "Introduction to R"
+author: "Lion Behrens, M.Sc."
+institute: "Chair of Social Data Science and Methodology"
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: methods-theme.css
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: middle, inverse
+
+# Introduction to R
+## 1.3 R, RStudio and basic functionality
+
+#### Lion Behrens, M.Sc.
+
+&nbsp;  
+&nbsp;  
+&nbsp;    
+&nbsp;    
+&nbsp;  
+&nbsp;    
+
+```{r, echo=FALSE, out.width="50%"}
+knitr::include_graphics("Logo_UMA_EN_Weiss.PNG")
+```
+____________________________________________________________   
+University of Mannheim      
+Chair of Social Data Science and Methodology      
+Chair of Quantitative Methods in the Social Sciences     
+
+---
+
+# R & RStudio
+
+.pull-left[
+```{r echo=FALSE, out.width="24%"}
+knitr::include_graphics("img/r-logo.png")
+```
+
+- R is an open-source (and free!) statistical .strong-highlight[programming language]
+
+- R is also an environment for statistical computing and graphics
+
+- It's easily extensible and up to date with user-developed **packages**
+
+- And has an amazing user community (getting help, tidytuesday etc.)
+
+- Install from [https://www.r-project.org/](https://www.r-project.org/)
+]
+
+--
+
+.pull-right[
+```{r echo=FALSE, out.width="50%"}
+knitr::include_graphics("img/rstudio-logo.png")
+```
+- RStudio is a convenient interface for R called an .strong-highlight[IDE] (integrated development environment), e.g. *"I write R code in the RStudio IDE"*
+
+- RStudio is not a requirement for programming with R, but it's very commonly used by R programmers and data scientists and provides comprehensive support for writing R code:
+    - Syntax highlighting,
+    - Spellchecking,
+    - Auto-completion and,
+    - Better overview of files, libraries, created objects/output
+
+- Install from [https://rstudio.com/](https://rstudio.com/)
+]

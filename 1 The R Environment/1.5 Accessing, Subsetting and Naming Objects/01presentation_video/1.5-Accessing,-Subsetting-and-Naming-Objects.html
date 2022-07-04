@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Lion Behrens, M.Sc." />
+    <link rel="stylesheet" href="methods-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class: middle, inverse
+
+# Introduction to R
+## 1.5 Accessing, Subsetting and Naming Objects
+
+#### Lion Behrens, M.Sc.
+
+&amp;nbsp;  
+&amp;nbsp;  
+&amp;nbsp;    
+&amp;nbsp;    
+&amp;nbsp;  
+&amp;nbsp;    
+
+&lt;img src="Logo_UMA_EN_Weiss.PNG" width="50%" /&gt;
+____________________________________________________________   
+University of Mannheim      
+Chair of Social Data Science and Methodology      
+Chair of Quantitative Methods in the Social Sciences     
+
+---
+
+# Accessing and Subsetting Objects
+
+- Often, we only want to access only a **subset of the information** that is stored in an object.
+
+--
+
+- This holds equally if we are working with vectors, matrices, data frames or lists. 
+
+--
+
+- **Accessing** and **subsetting** objects works **very similar** across different object types. 
+
+&amp;nbsp;  
+&amp;nbsp;  
+
+
+
+--
+
+
+```r
+character_vector &lt;- c("Austria", "England", "Brazil", "Germany")
+```
+
+--
+
+
+```r
+character_vector[1] # accessing the first element
+```
+
+```
+## [1] "Austria"
+```
+
+---
+
+# Accessing and Subsetting Vectors
+
+- Often, we only want to access only a **subset of the information** that is stored in an object.
+
+- This holds equally if we are working with vectors, matrices, data frames or lists. 
+
+- **Accessing** and **subsetting** objects works **very similar** across different object types. 
+
+&amp;nbsp;  
+&amp;nbsp;  
+
+
+```r
+character_vector &lt;- c("Austria", "England", "Brazil", "Germany")
+```
+
+
+
+```r
+character_vector[length(character_vector)] # accessing the last element
+```
+
+```
+## [1] "Germany"
+```
+
+---
+
+# Accessing and Subsetting Matrices
+
+- Since matrices have **two dimensions**, we need to specify the **row** and **column** of the element that we want to retreive.
+
+--
+
+&amp;nbsp;  
+
+The **general logic** goes
+
+
+```r
+matrix_object[specific_row, specific_column]
+```
+
+--
+
+*Note:* These operations equally hold for **data frames**. 
+
+---
+
+# Accessing and Subsetting Matrices
+
+- Since matrices have **two dimensions**, we need to specify the **row** and **column** of the element that we want to retreive.
+
+
+&amp;nbsp;  
+
+
+```r
+matrix_example &lt;- matrix(1:20, nrow = 4, ncol = 5)
+print(matrix_example)
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    5    9   13   17
+## [2,]    2    6   10   14   18
+## [3,]    3    7   11   15   19
+## [4,]    4    8   12   16   20
+```
+
+--
+
+
+```r
+matrix_example[1,1] # 1st row, 1st column
+matrix_example[2,] # 2nd row
+matix_example[,4] # 4th column
+matrix_example[1:2, 3:4] # rows 1 and 2, columns 3 and 4
+```
+
+---
+
+# Accessing and Subsetting Data Frames
+
+- When working with **data frames**, you can select individual elements, rows and columns in the same way as with **matrices**. 
+
+--
+
+- Additionally, you can take advantage of the the fact that columns (**variables**) actually have **names**. 
+
+--
+
+
+```r
+df_example &lt;-
+  data.frame(
+    country = c("Austria", "England", "Brazil", "Germany"), 
+    capital = c("Vienna", "London", "Brasília", "Berlin"), 
+    elo = c(1761, 1938, 2166, 1988)
+  )
+```
+
+--
+
+- You can access individual variables using the **$** sign: 
+
+--
+
+
+```r
+df_example$country
+```
+
+```
+## [1] "Austria" "England" "Brazil"  "Germany"
+```
+
+---
+
+# Accessing and Subsetting Data Frames
+
+- When working with **data frames**, you can select individual elements, rows and columns in the same way as with **matrices**. 
+
+- Additionally, you can take advantage of the the fact that columns (**variables**) actually have **names**. 
+
+
+```r
+df_example &lt;-
+  data.frame(
+    country = c("Austria", "England", "Brazil", "Germany"), 
+    capital = c("Vienna", "London", "Brasília", "Berlin"), 
+    elo = c(1761, 1938, 2166, 1988)
+  )
+```
+
+
+- An alternative is **indexing** by **variable name**. 
+
+
+```r
+df_example["country"]
+```
+
+```
+##   country
+## 1 Austria
+## 2 England
+## 3  Brazil
+## 4 Germany
+```
+
+---
+
+# Accessing and Subsetting Data Frames
+
+- When working with **data frames**, you can select individual elements, rows and columns in the same way as with **matrices**. 
+
+- Additionally, you can take advantage of the the fact that columns (**variables**) actually have **names**. 
+
+
+```r
+df_example &lt;-
+  data.frame(
+    country = c("Austria", "England", "Brazil", "Germany"), 
+    capital = c("Vienna", "London", "Brasília", "Berlin"), 
+    elo = c(1761, 1938, 2166, 1988)
+  )
+```
+
+
+- Or using the **order of the variables**: 
+
+
+```r
+df_example[1]
+```
+
+```
+##   country
+## 1 Austria
+## 2 England
+## 3  Brazil
+## 4 Germany
+```
+
+---
+
+# Accessing and Subsetting Lists
+
+
+```r
+list_example
+```
+
+```
+## [[1]]
+## [1] 1 2 3 4 5
+## 
+## [[2]]
+## [1] "Austria" "England" "Brazil"  "Germany"
+## 
+## [[3]]
+## [1]  TRUE FALSE FALSE  TRUE
+## 
+## [[4]]
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    5    9   13   17
+## [2,]    2    6   10   14   18
+## [3,]    3    7   11   15   19
+## [4,]    4    8   12   16   20
+## 
+## [[5]]
+##   country  capital  elo
+## 1 Austria   Vienna 1761
+## 2 England   London 1938
+## 3  Brazil Brasília 2166
+## 4 Germany   Berlin 1988
+```
+
+---
+
+# Accessing and Subsetting Lists
+
+Next to indexing with `[ ]` there exists a different way of **indexing** in R using `[[ ]]`.
+
+--
+
+- `[ ]` always returns object of the **same class** 
+
+--
+
+- `[[ ]]` can return objects of **different classes**
+
+--
+
+&amp;nbsp;  
+
+This distinction comes in very handy when working with lists. 
+
+
+
+```r
+list_example[2] # returns a sublist of list_example, which is a list itself
+```
+
+```
+## [[1]]
+## [1] "Austria" "England" "Brazil"  "Germany"
+```
+
+--
+
+
+```r
+x &lt;- list_example[2] 
+class(x) # check whether it's a list
+```
+
+```
+## [1] "list"
+```
+
+---
+
+# Accessing and Subsetting Lists
+
+Next to **indexing** with `[ ]` there exists a different **subsetting operator** in R using `[[ ]]`.
+
+- `[ ]` always returns object of the **same class** 
+
+- `[[ ]]` can return objects of **different classes**
+
+&amp;nbsp;  
+
+This distinction comes in very handy when working with lists. 
+
+
+
+```r
+list_example[[2]] # returns the object that is stored in the second sublist
+```
+
+```
+## [1] "Austria" "England" "Brazil"  "Germany"
+```
+
+--
+
+
+```r
+x &lt;- list_example[[2]] 
+class(x) # check whether it's a vector
+```
+
+```
+## [1] "character"
+```
+
+```r
+is.vector(x)
+```
+
+```
+## [1] TRUE
+```
+
+---
+
+# Combining [[ ]] and [ ]
+
+We can even combine both **subsetting operators** when working with lists. Type `list_example[[2]][1]`.
+
+--
+
+- `[[2]]` refers to the vector stored in the second sublist in `list_example`
+
+--
+
+- `[1]` refers to the first element of this vector
+
+--
+
+&amp;nbsp;  
+
+**Question:** Which object will be retained by the above command?
+
+
+```
+## [[1]]
+## [1] 1 2 3 4 5
+## 
+## [[2]]
+## [1] "Austria" "England" "Brazil"  "Germany"
+```
+
+--
+
+
+```r
+list_example[[2]][1]
+```
+
+```
+## [1] "Austria"
+```
+
+---
+
+
+# Naming Objects
+
+We can name the **individual elements** of different elements using the `names()` function. 
+
+--
+
+First, let's check whether the vectors that we generated have any names assigned to them. 
+
+--
+
+&amp;nbsp;
+
+
+```r
+numeric_vector &lt;- c(1, 2, 3, 4, 5)
+names(numeric_vector)
+```
+
+```
+## NULL
+```
+
+--
+
+Now, let's assign names. 
+
+--
+
+
+```r
+names(numeric_vector) &lt;- c("Name A", "Name B", "Name C", "Name D", "Name E")
+numeric_vector
+```
+
+```
+## Name A Name B Name C Name D Name E 
+##      1      2      3      4      5
+```
+
+---
+
+# Naming Objects
+
+We can name the **individual elements** of different elements using the `names()` function. 
+
+First, let's check whether the vectors that we generated have any names assigned to them. 
+
+&amp;nbsp;
+
+The same holds for **lists**. 
+
+--
+
+
+```r
+names(list_example) &lt;- c("numeric_vector", "character_vector", "logical_vector", "matrix", "df")
+names(list_example)
+```
+
+```
+## [1] "numeric_vector"   "character_vector" "logical_vector"   "matrix"          
+## [5] "df"
+```
+
+
+---
+
+# Naming Objects
+
+We can name the **individual elements** of different elements using the `names()` function. 
+
+First, let's check whether the vectors that we generated have any names assigned to them. 
+
+&amp;nbsp;
+
+As well as **matrices** and **data frames**. 
+
+--
+
+
+```r
+names(matrix_example) &lt;- c("Col 1", "Col 2", "Col 3", "Col 4", "Col 5")
+names(df_example) &lt;- c("Var 1", "Var 2", "Var 3")
+```
+
+--
+
+*Note:* For matrices and data frames, there are also the handy commands `colnames()` and `rownames()`.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

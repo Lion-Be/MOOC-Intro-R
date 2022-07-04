@@ -1,0 +1,250 @@
+---
+title: "Introduction to R:<br>Basic Workflow"
+output: 
+  learnr::tutorial:
+    css: css/lab.css
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr) 
+library(gradethis) # to allow for automated code checking
+library(emo)
+#gradethis_setup()
+knitr::opts_chunk$set(error = TRUE)
+```
+
+```{r, echo=FALSE, eval=T}
+# define objects for this session 
+x <<- 5
+y <<- 5
+x_1 <<- 1.1 
+x_2 <<- 5.2
+string <<- "University of Mannheim"
+```
+
+## Welcome to this exercise!
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
+```
+
+In this tutorial, you will practice some of the **basic functionality** surrounding R. The learning goals for this tutorial are:
+
+1.  How to perform simple calculations in R.
+2.  How to define objects and store the output of arithmetic functions in different objects.
+3.  How to inspect objects by evaluating them using base R functions.
+
+This tutorial is aimed at the absolute **R novice** and is designed to provide you with some basic intuition for the workflow in R. So if you're just getting started and you are still figuring out how things work within your RStudio panes, this tutorial is for you! If you have already had prior exposure to R, you might as well skip to more advanced material. 
+
+Let's go and enjoy! `r emo::ji("smile")`
+
+
+## Getting Started: Simple Calculations
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
+```
+
+In its very simplest form, R is simply a calculator. So we will start out by just letting R run some calculation for us. Mark the code that you see below and type `CTRL + ENTER`. Alternatively, click on `Run Code`.
+
+```{r Calculator1, exercise=TRUE}
+44-2
+```
+
+Here are some more calculations: 
+
+```{r Calculator2, exercise=TRUE}
+5/2
+
+3^2
+
+sqrt(16)
+
+log(5)
+```
+
+Note that the last two calculations fundamentally differ from the former ones. In the first three calculations that we ran, R simply performed arithmetic operations (substraction, division, exponentation). In the last two calculations we executed the built in R **functions** called `sqrt()` and `log()`, which take any numeric value as input and, equally, output a numeric value. 
+
+If you place parentheses correctly, R incorporates the order of operations.
+
+```{r Calculator3, exercise=TRUE}
+((2 + 2) * 2)^2
+```
+
+This will yield the same result as above:
+
+```{r Calculator4, exercise=TRUE}
+(4 * 2)^2
+```
+
+
+While the following expression yields a different result: 
+
+```{r Calculator5, exercise=TRUE}
+(2 + 2 * 2)^2
+```
+
+
+## Exercise 1
+
+Now it's your turn! Start out by calculating the square root of the number 4 using the `sqrt()` and function. Afterwards, click on `Submit Answer`.
+
+```{r ex1_1, exercise = T}
+
+```
+
+::: {#ex1_1-hint}
+**Hint:** Simply type `sqrt(4)` and run the code.
+:::
+
+```{r ex1_1-check, echo=F, eval=F}
+grade_result(
+  pass_if(~ identical(.result, 2), "Well done! You have just executed your very first function in R."),
+  fail_if(~ identical(.result, 3), "That doesn't seem right.")
+)
+```
+
+Now, retain the natural logarithm of the number 1. Afterwards, click on `Submit Answer`.
+
+```{r ex1_2, exercise = T}
+
+```
+
+::: {#ex1_2-hint}
+**Hint:** Simply type `log(1)` and run the code.
+:::
+
+```{r ex1_2-check, echo=F, eval=F}
+grade_result(
+  pass_if(~ identical(.result, 0), "Nice job!"),
+  fail_if(~ identical(.result, 1), "That doesn't seem right.")
+)
+```
+
+
+## Assignment Operators 
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
+```
+
+There are a couple of **assignment operators** in R. In this tutorial, we are going to focus on the two most popular ones, namely `<-` and `=`. Assignment operators are used to store information in objects, which in turn are stored in R's **global environment**. 
+
+Let's start by creating some different objects. In the code below, we store the number 5 to an object called `x`. 
+
+```{r ass1, exercise = T}
+x <- 5
+```
+
+Notice that the code above will not lead to any kind of printed output. We simply defined the object `x`, without telling R that anything should be printed for us. 
+
+If we want to assess or print out the information that is stored in the object `x`, we either execute `print(x)` or simply type the object's name. 
+
+```{r ass2, exercise = T}
+print(x)
+x
+```
+
+An assignment operator that works in an identical fashion is `=`. Let's create another object called `y` with the same information **BUT** using this alternative operator. 
+
+```{r ass3, exercise = T}
+y = 5 # define y using alternative assignment operator
+```
+
+Now, let's check whether R really deems both objects equivalent. The `identical()` function comes in handy here. 
+
+```{r ass4, exercise = T}
+identical(x, y) # check x and y for equivalence
+```
+
+As we can see, there is virtually no difference between the two objects although they have been created using different assignment operators. However, the issue with the operator `=` is that it has **different uses within R across different situations**. At a later point in this class, you will see how `=` can also be used without performing any object assignment. This is why `<-`, an unambiguous operator, has established itself as the norm for object assignment in R. 
+
+From now on, only create objects using the `<-` operator. 
+
+
+## Exercise 2
+
+Your turn! Create two objects called `x_1` and `x_2` and define them as the numeric values 1.1 and 5.2. 
+
+```{r ex2_1, exercise = T}
+
+```
+
+::: {#ex2_1-hint}
+**Hint:** This code chunk should contain two lines. In the first line, you define `x_1` as 1.1. In the second line, you define `x_2` as 5.2
+:::
+
+Now, check whether both objects are identical using the `identical()` function. 
+
+```{r ex2_2, exercise = T}
+
+```
+
+::: {#ex2_2-hint}
+**Hint:** If you need help, type `help(idential)` in your RStudio console or in the code chunk above and click on `Run Code`. 
+:::
+
+## Inspecting Objects
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
+```
+
+Finally, let's use R to acquire some more information on the objects that we are creating. In Chapter 1.4 of this class, we will deal with different **object classes**. Here, we already start out with a basic distinction: **Numeric values** and **character strings**. 
+
+We already now what numeric values are. 
+
+```{r ins1, exercise = T}
+x <- 5
+```
+
+Secondly, let us define a character string. 
+
+```{r ins2, exercise = T}
+string <- "University of Mannheim"
+```
+
+Once we have created these, there are a variety of functions available that help us inspecting these objects a little further. For example, let us ensure that these two objects are actually of different classes. 
+
+```{r ins3, exercise = T}
+class(x)
+class(string)
+```
+
+Furthermore, we could get different insights such as **how long** the character string that we have created actually is. This can be done using the `nchar()` function. 
+
+```{r ins4, exercise = T}
+nchar(string)
+```
+
+As we can see, the string "University of Mannheim" consists of 22 characters (including whitespaces). However, what happens if we apply a different function, namely `length()`?
+
+```{r ins5, exercise = T}
+length(string)
+```
+
+The length of the string is just 1! This is because other than `nchar()` (which is for character objects), the `length()` function is a generic function that quantifies the length of any kind of object, no matter whether it is numeric, character, a vector, or a data frame. The length of the object `string` is just 1, as there is only one sequence of characters stored in it. 
+
+What would happen if we assign multiple character sequences to the object `string`?
+
+```{r ins6, exercise = T}
+string <- c("University of Mannheim", "University of Konstanz")
+length(string)
+```
+
+As now there are two different character sequences stored in `string`, the length of the object is 2. You want to learn more about different types of objects in R and their dimensionality? Onto the next Section in the class!
+
+
+
+
+
+
+
+
+
+
+
+
+
+

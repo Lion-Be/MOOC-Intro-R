@@ -1,0 +1,28 @@
+# Write short and consise object names
+- they should be machine readable
+	-> no spaces, punctuation, special characters
+- they should be human readable
+	-> contain information on what the object stores
+
+# Write a maximum of 80 characters of code per line
+- when analyses become more complex, code can become really long and messy
+- sticking to a 80 character limit will help you understand what you did at any point of the analysis
+
+# Name sections in your R script
+- name sections in your R script such that you can navigate between sections without scrolling
+
+# Indent your code by the arguments of a function 
+
+# Use set.seed() for reproducability
+
+# The best way to learn R is doing R
+- not just do exercises of this course (although highly recommended)
+- but just jump into your next data project using R
+- stop doing things in Stata or SPSS because you know how they work there and are quicker
+	-> yes they will be quicker in the beginning in the software program that you're most familiar with
+	-> but the only way of learning and becoming fluent in R is to constantly try out new things 
+
+# Get help online
+- Cheatsheets
+- Stackoverflow
+
