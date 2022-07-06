@@ -88,7 +88,7 @@ While the following expression yields a different result:
 
 ## Exercise 1
 
-Now it's your turn! Start out by calculating the square root of the number 4 using the `sqrt()` and function. Afterwards, click on `Submit Answer`.
+**Exercise 1a.** Now it's your turn! Start out by calculating the square root of the number 4 using the `sqrt()` and function. Afterwards, click on `Submit Answer`.
 
 ```{r ex1_1, exercise = T}
 
@@ -105,7 +105,20 @@ grade_result(
 )
 ```
 
-Now, retain the natural logarithm of the number 1. Afterwards, click on `Submit Answer`.
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+sqrt(4)
+```
+
+</p></details>
+
+&nbsp;
+
+
+**Exercise 1b.** Now, retain the natural logarithm of the number 1. Afterwards, click on `Submit Answer`.
 
 ```{r ex1_2, exercise = T}
 
@@ -122,6 +135,18 @@ grade_result(
 )
 ```
 
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+log(1)
+```
+
+</p></details>
+
+&nbsp;
+
 
 ## Assignment Operators 
 
@@ -131,7 +156,7 @@ knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
 
 There are a couple of **assignment operators** in R. In this tutorial, we are going to focus on the two most popular ones, namely `<-` and `=`. Assignment operators are used to store information in objects, which in turn are stored in R's **global environment**. 
 
-Let's start by creating some different objects. In the code below, we store the number 5 to an object called `x`. 
+Let's start by creating some different objects. In the code below, we store the number 5 in an object called `x`. 
 
 ```{r ass1, exercise = T}
 x <- 5
@@ -152,7 +177,7 @@ An assignment operator that works in an identical fashion is `=`. Let's create a
 y = 5 # define y using alternative assignment operator
 ```
 
-Now, let's check whether R really deems both objects equivalent. The `identical()` function comes in handy here. 
+Again, no output yet. Now, let's check whether R really deems both objects equivalent. The `identical()` function comes in handy here. 
 
 ```{r ass4, exercise = T}
 identical(x, y) # check x and y for equivalence
@@ -165,7 +190,7 @@ From now on, only create objects using the `<-` operator.
 
 ## Exercise 2
 
-Your turn! Create two objects called `x_1` and `x_2` and define them as the numeric values 1.1 and 5.2. 
+**Exercise 2a.** Your turn! Create two objects called `x_1` and `x_2` and define them as the numeric values 1.1 and 5.2. 
 
 ```{r ex2_1, exercise = T}
 
@@ -175,7 +200,21 @@ Your turn! Create two objects called `x_1` and `x_2` and define them as the nume
 **Hint:** This code chunk should contain two lines. In the first line, you define `x_1` as 1.1. In the second line, you define `x_2` as 5.2
 :::
 
-Now, check whether both objects are identical using the `identical()` function. 
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+x_1 <- 1.1
+x_2 <- 5.2
+```
+
+</p></details>
+
+&nbsp;
+
+
+**Exercise 2b.** Now, check whether both objects are identical using the `identical()` function. 
 
 ```{r ex2_2, exercise = T}
 
@@ -184,6 +223,18 @@ Now, check whether both objects are identical using the `identical()` function.
 ::: {#ex2_2-hint}
 **Hint:** If you need help, type `help(idential)` in your RStudio console or in the code chunk above and click on `Run Code`. 
 :::
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+identical(x_1, x_2)
+```
+
+</p></details>
+
+&nbsp;
 
 ## Inspecting Objects
 
@@ -233,7 +284,7 @@ string <- c("University of Mannheim", "University of Konstanz")
 length(string)
 ```
 
-As now there are two different character sequences stored in `string`, the length of the object is 2. You want to learn more about different types of objects in R and their dimensionality? Onto the next Section in the class!
+As now there are two different character sequences stored in `string`, the length of the object is 2. You want to learn more about different types of objects in R and their dimensionality? Onto the next section in the class!
 
 
 

@@ -239,7 +239,7 @@ list_example
 
 # Accessing and Subsetting Lists
 
-Next to indexing with `[ ]` there exists a different way of **indexing** in R using `[[ ]]`.
+Next to **indexing** with `[ ]` there exists a different **subsetting operator** in R using `[[ ]]`.
 
 --
 

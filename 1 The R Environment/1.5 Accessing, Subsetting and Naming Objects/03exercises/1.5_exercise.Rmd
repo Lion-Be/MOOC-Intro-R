@@ -1,0 +1,746 @@
+---
+title: "Introduction to R:<br>Working With Different Object Classes"
+output: 
+  learnr::tutorial:
+    css: css/lab.css
+    code_folding: hide
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr) 
+library(gradethis) # to allow for automated code checking
+library(emo)
+#gradethis_setup()
+knitr::opts_chunk$set(error = TRUE)
+```
+
+```{r, echo=FALSE, eval=T, warning=F, message=F}
+# define objects for this session 
+numeric_vec <<- c(3.7, 3.0, 4.0, 4.0, 3.7)
+char_vec <<- c("Austria", "Germany", "UK", "Brazil", "UK")
+logical_vec <<- c(TRUE, FALSE, TRUE, T, F)
+group1 <<- rnorm(n = 500, mean = 2, sd = 2) # sample 500 values from N(2,1)
+group2 <<- rnorm(n = 500, mean = 5, sd = 2) # sample 500 values from N(4,1)
+group_matrix <<- cbind(group1, group2)
+df_example <<- data.frame(numeric_vec, 
+                         char_vec, 
+                         logical_vec
+                         )
+gpas <<- c(4.0, 2.9, 3.0, 3.7)
+manifest <<- "A spectre is haunting Europe — the spectre of communism. All the powers of old Europe have entered into a holy alliance to exorcise this spectre: Pope and Tsar, Metternich and Guizot, French Radicals and German police-spies."
+manifest_13 <<- c(manifest, "Where is the party in opposition that has not been decried as communistic by its opponents in power? Where is the opposition that has not hurled back the branding reproach of communism, against the more advanced opposition parties, as well as against its reactionary adversaries?", 
+"Two things result from this fact:", "I. Communism is already acknowledged by all European powers to be itself a power.", "II. It is high time that Communists should openly, in the face of the whole world, publish their views, their aims, their tendencies, and meet this nursery tale of the Spectre of Communism with a manifesto of the party itself.", "To this end, Communists of various nationalities have assembled in London and sketched the following manifesto, to be published in the English, French, German, Italian, Flemish and Danish languages.")
+gpa_2018 <<- round(rnorm(n = 100, mean = 3.4, sd = 1), digits=2)
+gpa_2019 <<- round(rnorm(n = 100, mean = 3.1, sd = 1), digits=2)
+gpa_2020 <<- round(rnorm(n = 100, mean = 3.4, sd = 1), digits=2)
+gpa_2021 <<- round(rnorm(n = 100, mean = 3.6, sd = 1), digits=2)
+gpa_2022 <<- round(rnorm(n = 100, mean = 3.8, sd = 1), digits=2)
+library(readstata13)
+ess10 <<- read.dta13("dat/ESS10.dta")
+```
+
+## Welcome to this exercise!
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
+```
+
+### Learning goals
+
+In this tutorial, we will explore the **different types of objects** that we have in R and figure out how to work with them. Specifically, we will cover the following: 
+
+1. How to create different types of objects (vectors, matrices, data frames) from scratch. 
+2. How to select, subset and name elements of these different objects. 
+3. How to merge different objects. 
+
+### Quick Recap
+
+In general, there are different **data types** which define how data are stored internally in R and which operations you are allowed to perform on these data. For instance, it seldomly will make sense to perform mathematical operations on a character string. On the other hand, **object types** refer to where data are stored such that you can assess it. 
+
+:::: {style="display: flex;"}
+
+::: {}
+#### Data Types
+
+- numeric values
+- character strings
+- logical values
+- factors
+
+:::
+
+::: {}
+#### Object Types
+
+- vectors
+- matrices
+- data frames
+- lists
+
+:::
+
+::::
+
+Note that at this point of the course, we are not yet working with "observed" data such as data from a survey program or experiment. This is something that we will reserve for the next thematic block on **Data Manipulation**. So far, we are merely creating our own data from scratch. 
+
+Let's create and inspect some objects! `r emo::ji("smile")`
+
+
+## Data Format: Vector
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
+```
+
+### Creating Vectors
+
+```{r, echo=FALSE, out.width="30%"}
+knitr::include_graphics("images/data_vector.PNG")
+```
+
+Let's start out with vectors. As you know, there are numeric, character and logical vectores. Let's say we want a numeric vector comprising the numbers 3.7, 3.0, 4.0, 4.0, 3.7. How do we assign this set of numbers to a vector?
+
+<i class="fa fa-hand-o-right"></i> The `c()` function combines single values to a vector:
+
+```{r vectors1, exercise=TRUE}
+numeric_vec <- c(3.7, 3.0, 4.0, 4.0, 3.7)
+
+numeric_vec
+```
+
+Of course, this works equally for character and logical vectors: 
+
+```{r vectors2, exercise=TRUE}
+char_vec <- c("Austria", "Germany", "UK", "Brazil", "UK")
+
+char_vec
+```
+
+```{r vectors3, exercise=TRUE}
+logical_vec <- c(TRUE, FALSE, TRUE, T, F) # you can abbreviate 'TRUE' and 'FALSE' with 'T' and 'F'
+
+logical_vec
+```
+
+
+### Working With Vectors
+
+Now that we have created our first vectors, let's build some intuition on what we can do with these objects. Given that we have a numerical vector, we can execute mathematical functions on each element of the vector. 
+
+```{r vectors4, exercise=TRUE}
+log(numeric_vec) # calculate the natural logarithm of each element in numeric_vec
+numeric_vec * -1 # turn numeric_vec into negative numbers
+```
+
+Alternatively, there are functions that you can use on the vector as a whole. 
+
+```{r vectors5, exercise=TRUE}
+sum(numeric_vec) # calculate the sum of all values
+round(numeric_vec, digits=0) # round all elements to integers
+```
+
+Of course, mathematical operations will not work on character vectors. 
+
+```{r vectors6, exercise=TRUE}
+sum(char_vec) # this command will produce an error as char_vec is not numeric
+```
+
+However, other functions can operate well on character vectors. 
+
+```{r vectors7, exercise=TRUE}
+nchar(char_vec) # calculate number of characters for each element
+length(char_vec) # calculate length of whole vector
+substring(char_vec, 1, 3) # extract first three characters from each element
+```
+
+If you want to read up on any of these functions' functionality, type (e.g.) `help(substring)` in the code chunk above or in your RStudio console. 
+
+
+## Data Format: Matrix
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
+```
+
+<i class="fa fa-hand-o-right"></i> Matrices are the most genuine **rectangular**, that is two-dimensional, data format in R. 
+
+<i class="fa fa-hand-o-right"></i> A matrix consists of **n** rows and **k** columns and hence has the dimensionality **n x k**. 
+
+<i class="fa fa-hand-o-right"></i> All values in a matrix need to be of the same type. If this is not the case, R will **convert** them into a common type. 
+
+
+### Creating Matrices
+
+```{r, echo=FALSE, out.width="20%"}
+knitr::include_graphics("images/data_matrix.png")
+```
+
+Let's start out by creating a matrix and defining all values manually. 
+
+```{r matrix1, exercise=TRUE}
+matrix_example <- matrix(1:20, nrow = 4, ncol = 5) # create numeric matrix
+matrix_example
+```
+
+Alternatively, we can bind several vectors of the same class into a matrix, for instance by using the `cbind()` function. Let's first construct two numerical vectors as samples from normal distributions with different population means.
+
+```{r matrix2, exercise=TRUE}
+# define
+group1 <- rnorm(n = 500, mean = 2, sd = 2) # sample 500 values from N(2,1)
+group2 <- rnorm(n = 500, mean = 5, sd = 2) # sample 500 values from N(4,1)
+```
+
+This is how the distribution of values looks like for the two groups. 
+
+```{r matrix3, exercise=TRUE}
+hist(group1, breaks=100, xlab="Values", main="Distribution for Both Groups", xlim=c(-5,10)) # create histogram for group1
+hist(group2, breaks=100, col="orange", add=T) # add historam for group2
+```
+
+To bind them into a single matrix object, execute
+
+```{r matrix4, exercise=TRUE}
+group_matrix <- cbind(group1, group2) # column-bind both vectors
+head(group_matrix) # inspect first couple of rows 
+```
+
+
+### Working With Matrices
+
+Just as was the case with vectors, R holds available a couple of functions that work well with matrix objects. For example, we might just want to inspect the dimensionality of the matrix.
+
+```{r matrix5, exercise=TRUE}
+dim(group_matrix) # dimensionality of the matrix
+nrow(group_matrix) # number of rows
+ncol(group_matrix) # number of columns
+length(group_matrix) # what does length() refer to here? Can you tell?
+```
+
+Alternatively, we can perform some calculations. `colMeans()` gives us the mean values per column (group). 
+
+```{r matrix6, exercise=TRUE}
+colMeans(group_matrix)
+```
+
+## Data Format: Data Frame
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
+```
+
+<i class="fa fa-hand-o-right"></i> Data frames are R's equivalent to **data sets** as you might know them from Stata, SPSS or other programs.
+
+<i class="fa fa-hand-o-right"></i> Just as matrices, a data frame consists of **n** rows and **k** columns and hence has the dimensionality **n x k**.
+
+<i class="fa fa-hand-o-right"></i> *Note:* Data frames can store **variables of different classes**.
+
+
+
+### Creating Data Frames
+
+```{r, echo=FALSE, out.width="20%"}
+knitr::include_graphics("images/data_frame.PNG")
+```
+
+Let's go back to the three vectors that we have constructed in one of the previous examples. Although these were different data types (numeric, character, logical), we can bind them into a single data frame such as the ones that we are analyzing in our daily work as social scientists. As it is often the case in R, *there are many ways to do this*. One way to go consists of simply wrapping the function `data.frame()` around all three vectors that we have created earlier.  
+
+```{r df1, exercise=TRUE}
+df_example <- data.frame(numeric_vec, 
+                         char_vec, 
+                         logical_vec
+                         ) # construct data frame
+df_example # print data frame
+```
+
+Alternatively, although this is probably something that you will do less of the time, we could manually insert all values of the data frame. 
+
+
+```{r df2, exercise=TRUE}
+df_example <- data.frame(
+    numeric_vec = c(3.7, 3.0, 4.0, 4.0, 3.7), 
+    char_vec = c("Austria", "Germany", "UK", "Brazil", "UK"), 
+    logical_vec = c(TRUE, FALSE, TRUE, T, F)
+    )
+df_example # print data frame
+```
+
+### Working With Data frames
+
+Data frames are probably the most useful object class that R holds ready for applied data analysis. There are a couple of ways how we can inspect the content of data frames a little closer. 
+
+```{r df3, exercise=TRUE}
+str(df_example)
+```
+
+```{r df4, exercise=TRUE}
+summary(df_example)
+```
+
+Both the `str()` and the `summary()` function provide you with valuable insights about the data that you have at hand. So far, our data simply consists of three variables with the rather uninformative names *numeric_vec*, *char_vec*, and *logical_vec*. What if these data were collected on applicants of a particular university and actually grasp
+
+- their GPA scores
+- country of origin
+- whether they were ultimately admitted
+
+Let's rename the variables (columns) of this data frame by 
+
+```{r df5, exercise=TRUE}
+colnames(df_example) <- c("GPA", "country", "admitted")
+df_example
+```
+
+We can rename a single column (for example the first column) by 
+
+```{r echo=F, eval=F}
+colnames(df_example) <- c("GPA", "country", "admitted")
+df_example <<- df_example
+```
+
+```{r df6, exercise=TRUE}
+colnames(df_example)[1] <- "gpa"
+df_example
+```
+
+Voilà! 
+
+
+## Data Format: List
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
+```
+
+<i class="fa fa-hand-o-right"></i> Lists just bind any number of objects together, even if these are of different classes.
+
+<i class="fa fa-hand-o-right"></i> A list can contain a value, a vector, a matrix, a dataframe - or several of these!
+
+```{r list1, exercise=TRUE}
+my_list <- list(numeric_vec, char_vec, logical_vec, group_matrix, df_example) # construct list
+my_list # print out
+```
+
+
+## Exercise 1 
+
+### Vectors
+
+**Exercise 1a.** Now it's your turn! Create a numerical vector called `gpas` comprising the numbers 4.0, 2.9, 3.0, 3.7 using the `c()` function. Afterwards, calculate the mean of this vector using `mean()`. Fill up the code chunk below. Afterwards, click `Submit Answer`. 
+
+```{r ex1_1, exercise = T}
+gpas <- # ...
+mean() 
+```
+
+::: {#ex1_1-hint}
+**Hint:** Your answer should comprise three lines of code. The first line generates an object `gpas` using the assignment operator `<-`. The second and third lines perform arithmetic calculations on this object using `mean()` and `sd()`. 
+:::
+
+```{r ex1_1-check, echo=F, eval=F}
+grade_result(
+  pass_if(~ identical(.result, 3.4), "Nice job!"),
+  fail_if(~ identical(.result, 1), "That doesn't seem right.")
+)
+```
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+gpas <- c(4.0, 2.9, 3.0, 3.7)
+mean(gpas)
+```
+
+</p></details>
+
+&nbsp;
+
+
+**Exercise 1b.** Now, calculate the standard deviation of gpa scores in your vector. 
+
+```{r ex1_2, exercise = T}
+
+```
+
+::: {#ex1_2-hint}
+**Hint:** Execute the function `sd()` and pass the argument `gpas` to that function.. 
+:::
+
+```{r ex1_2-check, echo=F, eval=F}
+grade_result(
+  pass_if(~ identical(round(.result, digits=1), 0.5), "Amazing!"),
+  fail_if(~ identical(.result, 1), "That doesn't seem right.")
+)
+```
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+sd(gpas)
+```
+
+</p></details>
+
+&nbsp;
+
+
+**Exercise 1c.** Consider the object `manifest` that you can print out below. Find out the following: 
+
+- What object class does `manifest` have?
+- How many characters does it entail?
+- Extract the first 56 characters from `manifest`. 
+
+```{r ex1_3, exercise = T}
+print(manifest)
+```
+
+::: {#ex1_3-hint}
+**Hint:** Check the object class using `class()` or `typeof()`. Count the number of characters using `nchar()`. Extract the first 56 characters using `substring()`.
+:::
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+class(manifest)
+nchar(manifest)
+substring(manifest, 1, 56)
+```
+
+</p></details>
+
+&nbsp;
+
+**Exercise 1d.**
+
+```{r q1, echo=FALSE}
+question("Which of the following statements are correct regarding the functions nchar() and length() when applied to objects of type 'character'?",
+  answer("The function length() gives me the number of characters that are stored in this object."),
+  answer("The function nchar() gives me the number of characters that are stored in this object.", correct=T),
+  answer("No mathematical operations can be performed on objects of type 'character.'", correct = TRUE),
+  answer("The function length() counts the number of character strings that are stored in an object.", correct=T),
+  allow_retry=T
+)
+```
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+Options 2, 3 and 4 are correct.
+
+</p></details>
+
+&nbsp;
+
+
+
+**If you had troubles with the multipe choice Exercise 1d:** Try out what's happening here! What does each function do?
+
+```{r manifest, exercise=TRUE}
+print(manifest_13)
+length(manifest_13)
+nchar(manifest_13)
+```
+
+
+### Matrices 
+
+**Exercise 1e.** Below, you see the GPA scores of the top 100 applicants of a high-ranked US-university across time. They are stored in the vectors `gpa_2018`, `gpa_2019`, `gpa_2020`, `gpa_2021`, `gpa_2022`. 
+
+- Column-bind all five vectors into one joint matrix called `gpas`. 
+- Calculate the mean GPA score per year using `colMeans()`. Did average performance of applicants improve?
+
+```{r ex1_4, exercise = T}
+gpa_2018
+gpa_2019
+gpa_2020
+gpa_2021
+gpa_2022
+# ... column-bind into a joint matrix
+# ... calculate the mean GPA score per year
+```
+
+::: {#ex1_4-hint}
+**Hint:** Column-bind the five vectors with `cbind()`. Calculate the mean score per year using `colMeans()`.
+:::
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+gpas <- cbind(gpa_2018, gpa_2019, gpa_2020, gpa_2021, gpa_2022)
+colMeans(gpas)
+```
+
+</p></details>
+
+&nbsp;
+
+
+### Data frames
+
+**Exercise 1f.** In the code chunk below, you have loaded the data set from the European Social Survey Wave 10 (collected 2020-2022). 
+
+- How many observations does this data frame have? 
+- How many variables?
+- What are the variable names? 
+
+```{r ex1_5, exercise = T, warning=F, message=F}
+ess10 
+
+
+```
+
+::: {#ex1_5-hint}
+**Hint:** You can check the number of observations with `nrow()`. The number of variables can be checked with `ncol()`. Both questions can be answered with `str()` or `dim()`. You can get the variable names using `colnames()`. 
+:::
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+nrow(ess10)
+ncol(ess10)
+colnames(ess10)
+```
+
+</p></details>
+
+&nbsp;
+
+
+
+## Selecting Elements in Vectors, Matrices and Data Frames
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("images/Logo_UMA_EN_RGB.PNG")
+```
+
+
+### Selecting Single Elements
+
+Often, we want to access single elements from R objects. The main selection operator for vectors, matrices and data frames is `[ ]`. Do you remember the object `char_vec`, a character vector that stored a sequence of countries? Let's first print it out, and then select the first and last observation in this vector. 
+
+```{r sel1, exercise=TRUE}
+print(char_vec)
+char_vec[1] # first observation
+char_vec[5] # last observation
+```
+
+An alternative to get the last observation is to simply use the `tail()` function. 
+
+```{r sel2, exercise=TRUE}
+tail(char_vec, 1)
+```
+
+If you want to select all elements **except** the first one, type
+
+```{r sel3, exercise=TRUE}
+char_vec[-1] # select all but first element
+```
+
+If you want to select all elements **except** the country **UK**, type
+
+```{r sel4, exercise=TRUE}
+char_vec[-which(char_vec=="UK")] # # select all but UK
+```
+
+
+### Sequences and Repetitions
+
+This last code chunk has already hinted towards a general fact in R: We can select (or subset) multiple elements from a vector at once. To navigate this securly, it is useful to learn about **repetitions** and **sequences**. 
+
+A repetition simply takes an object and then replicates it a certain amount of time. For instance, using the `rep()` function, we can replicate the element "Germany" an arbitrary number of times and store the result in a new vector. 
+
+```{r sel5, exercise=TRUE}
+germany_vec <- rep("Germany", 50)
+germany_vec
+```
+
+Even more handy for subsetting are sequences. In general, there are two ways to generate a sequence of values. First, R's built in function `:` builds an integer sequence of values ranging from the numeral on the left to the numeral on the right. 
+
+```{r sel6, exercise=TRUE}
+1:10 # creating a sequence of integers from 1 to 10
+```
+
+The `seq()` function lets you specify the gaps in the sequence manually. For instance, let's say we would like to generate a sequence of values from 1 to 10 in steps of 2. 
+
+```{r sel7, exercise=TRUE}
+seq(from = 1, to = 10, by = 2)
+```
+
+We can use this functionality for subsetting! Let's say we want to extract only the first three elements from `char_vec`. 
+
+```{r sel8, exercise=TRUE}
+char_vec[1:3] # select first three elements
+```
+
+What about the first, third and fifth element?
+
+```{r sel9, exercise=TRUE}
+char_vec[seq(from = 1, to = 5, by =2)] # select first, third and fifth element
+```
+
+
+### Subsetting Cases and Variables
+
+In the case of matrices and data frames, we are working with two-dimensional objects. Consider our data frame `df_example` which stored data from five applicants of a particular university and information on their GPA scores, country of origin and whether the applicant was admitted or not. 
+
+```{r echo=F, eval=T}
+colnames(df_example) <- c("GPA", "country", "admitted")
+df_example <<- df_example
+```
+
+```{r sel10, exercise=TRUE}
+df_example
+```
+
+Let's inspect how subsetting works on two-dimensional objects. 
+
+```{r sel11, exercise=TRUE}
+df_example[1,] # this subsets the first row, so all data for the first applicant
+df_example[,1] # this subsets the first column (variable)
+df_example[1,2] # this selects the country of the first applicant
+```
+
+Alternativey, we can also denote columns by their name directly (rather than numeric index.)
+
+```{r sel12, exercise=TRUE}
+df_example[1,"country"] 
+```
+
+In case of data frames, whole variables can also be selected using the `$`-operator. 
+
+```{r sel13, exercise=TRUE}
+df_example$country
+```
+
+
+## Exercise 2 
+
+### Subsetting Vectors
+
+**Exercise 2a.** Now it's your turn! Select the last element of the vector `manifest_13`. 
+
+```{r ex2_1, exercise = T}
+
+
+```
+
+::: {#ex2_1-hint}
+**Hint:** First look at the object. You can then subset it with `[ ]`. 
+:::
+
+```{r ex2_1-check, echo=F, eval=F}
+grade_result(
+  pass_if(~ identical(.result, "To this end, Communists of various nationalities have assembled in London and sketched the following manifesto, to be published in the English, French, German, Italian, Flemish and Danish languages."), "You got it right!"),
+  fail_if(~ identical(.result, 1), "That doesn't seem right.")
+)
+```
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+manifest_13[6]
+```
+
+</p></details>
+
+&nbsp;
+
+
+**Exercise 2b.** Select the second and fourth element of the vector `char_vec`.
+
+```{r ex2_2, exercise = T}
+
+
+```
+
+::: {#ex2_2-hint}
+**Hint:** You can simply subset with `[ ]`. If you want the second and fourth element, try to combine these numbers with `c()` before subsetting. 
+:::
+
+```{r ex2_2-check, echo=F, eval=F}
+grade_result(
+  pass_if(~ identical(.result, c("Germany", "Brazil")), "Great job!"),
+  fail_if(~ identical(.result, 1), "That doesn't seem right.")
+)
+```
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+char_vec[c(2,4)]
+```
+
+</p></details>
+
+&nbsp;
+
+
+
+### Subsetting Data Frames
+
+**Exercise 2c.** Select the variable `admitted` from the data frame `df_example`. 
+
+```{r ex2_3, exercise = T}
+
+```
+
+::: {#ex2_3-hint}
+**Hint:** You can subset either with `[ , ]` or, since the object is a data frame, using the `$`-operator. 
+:::
+
+```{r ex2_3-check, echo=F, eval=F}
+grade_result(
+  pass_if(~ identical(.result, c(T, F, T, T, F)), "Well done!"),
+  fail_if(~ identical(.result, 1), "That doesn't seem right.")
+)
+```
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+df_example$admitted
+df_example[,3] # identical
+```
+
+</p></details>
+
+&nbsp;
+
+
+
+**Exercise 2d.** Select the last observation (row) within the data set `df_example`.   
+
+```{r ex, exercise = T}
+
+```
+
+::: {#ex-hint}
+**Hint:** You can subset with `[ , ]`. 
+:::
+
+<details>
+<summary style="font-size:14px">View solution</summary>
+<p>
+
+```{r, eval=F} 
+df_example[nrow(df_example),]
+df_example[5,] # identical
+```
+
+</p></details>
