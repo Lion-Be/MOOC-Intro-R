@@ -29,6 +29,7 @@ Sure, go ahead! Click on any particular module below to get started :metal:
 - [1.5 Accessing, Subsetting, and Naming Objects](https://github.com/Lion-Be/MOOC-Intro-R/tree/main/1%20The%20R%20Environment/1.5%20Accessing%2C%20Subsetting%20and%20Naming%20Objects)
     - [01presentation_video](https://github.com/Lion-Be/MOOC-Intro-R/tree/main/1%20The%20R%20Environment/1.5%20Accessing%2C%20Subsetting%20and%20Naming%20Objects/01presentation_video)
     - [02coding_video](https://github.com/Lion-Be/MOOC-Intro-R/tree/main/1%20The%20R%20Environment/1.5%20Accessing%2C%20Subsetting%20and%20Naming%20Objects/02coding_video)
+    - [03exercises](https://github.com/Lion-Be/MOOC-Intro-R/tree/main/1%20The%20R%20Environment/1.5%20Accessing%2C%20Subsetting%20and%20Naming%20Objects/03exercises)
 - [1.6 Tips to Get Started](https://github.com/Lion-Be/MOOC-Intro-R/tree/main/1%20The%20R%20Environment/1.6%20Tips%20to%20Get%20Started)
 
 *Note:* Course is currently under development and the material is consistently updated.
